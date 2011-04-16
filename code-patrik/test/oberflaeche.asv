@@ -1,0 +1,5 @@
+[x,y,z] = sphere(20);
+h = surf(x,y,z);
+set(h,'FaceColor','gr','EdgeColor','none')
+light
+axis square
