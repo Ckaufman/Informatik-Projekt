@@ -22,7 +22,7 @@ function varargout = guiX(varargin)
 
 % Edit the above text to modify the response to help guiX
 
-% Last Modified by GUIDE v2.5 26-Apr-2011 16:54:15
+% Last Modified by GUIDE v2.5 26-Apr-2011 17:38:02
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -247,7 +247,23 @@ function ydisplay_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of ydisplay as text
 %        str2double(get(hObject,'String')) returns contents of ydisplay as a double
 global y
-y=get(han
+
+y=str2num(get(hObject,'String'))
+if (y-floor(y)<0.1)
+    y=y+0.5;
+    set(hObject,'String',num2str(y));
+end
+if y > 9.9 
+     y=9.9;     
+    set(hObject,'String',num2str(y))
+elseif y< 0.1
+    y=0.1;     
+    set(hObject,'String',num2str(y))
+end
+y
+
+
+
 
 % --- Executes during object creation, after setting all properties.
 function ydisplay_CreateFcn(hObject, eventdata, handles)
@@ -270,9 +286,20 @@ function xdisplay_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of xdisplay as text
 %        str2double(get(hObject,'String')) returns contents of xdisplay as a double
-Global x
-set(handles.xdisplay,'String',x)
+global x
+x=str2num(get(hObject,'String'));
+if (x-floor(x)<0.1)
+    x=x+0.5;
+    set(hObject,'String',num2str(x));
+end
 
+if x > 9.9
+    x=9.9;
+    set(hObject,'String',num2str(x))
+elseif x < 0.1
+    x=0.1
+    set(hObject,'String',num2str(x))
+end
 
 % --- Executes during object creation, after setting all properties.
 function xdisplay_CreateFcn(hObject, eventdata, handles)
@@ -321,6 +348,7 @@ view(elev(1)+3,elev(2))
 
 % --- Executes on button press in buttonSetx.
 function buttonSetx_Callback(hObject, eventdata, handles)
+% ---- löschen ----
 % hObject    handle to buttonSetx (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -342,6 +370,7 @@ x=output;
 
 % --- Executes on button press in buttonSety.
 function buttonSety_Callback(hObject, eventdata, handles)
+% ------ löschen -------
 % hObject    handle to buttonSety (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -382,7 +411,9 @@ function interpolate1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global x y values
-u=[x y];
+x
+y
+u=[x y]
 xlow= floor(u(1));
 ylow= floor(u(2));
 xhigh= ceil(u(1));
@@ -399,15 +430,6 @@ h=h(3);
 gcf
 line([x x],[y y],[0 h],'Color','r','LineWidth',4)
 
-
-% --- Executes on button press in keyboard1.
-function keyboard1_Callback(hObject, eventdata, handles)
-% hObject    handle to keyboard1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-keyboard
-
-
 % --- Executes on button press in clear1.
 function clear1_Callback(hObject, eventdata, handles)
 % hObject    handle to clear1 (see GCBO)
@@ -415,8 +437,6 @@ function clear1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 gca
 cla
-
-
 
 function edit4_Callback(hObject, eventdata, handles)
 % hObject    handle to edit4 (see GCBO)
@@ -438,13 +458,3 @@ function edit4_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-
-
-% --- Executes on button press in setxy.
-function setxy_Callback(hObject, eventdata, handles)
-% hObject    handle to setxy (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-global x y
-x=num2str(get(handles.xdisplay,'String'))
-y=num2str(get(handles.ydisplay,'String'))

@@ -5,7 +5,7 @@ function varargout = guiX(varargin)
 %
 %      H = GUIX returns the handle to a new GUIX or the handle to
 %      the existing singleton*.
-%se
+%
 %      GUIX('CALLBACK',hObject,eventData,handles,...) calls the local
 %      function named CALLBACK in GUIX.M with the given input arguments.
 %
@@ -22,7 +22,7 @@ function varargout = guiX(varargin)
 
 % Edit the above text to modify the response to help guiX
 
-% Last Modified by GUIDE v2.5 26-Apr-2011 16:54:15
+% Last Modified by GUIDE v2.5 26-Apr-2011 15:12:13
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -94,8 +94,7 @@ for i=4:-1:0
 end
 values=values.*6
 plotter
-axis([0 10 0 10 0 3])
-view(40,20)
+
 
 
 % --- Executes on button press in valley.
@@ -110,10 +109,7 @@ for i=1:10
    values= [values; y]
 end
 size(values)
-
 plotter()
-axis([0 10 0 10 0 8])
-view(3,30)
 
 % --- Executes on button press in lineardata.
 function lineardata_Callback(hObject, eventdata, handles)
@@ -131,8 +127,7 @@ for i=1:10
 end
 
 plotter
-axis([0 10 0 10 0 11])
-view(40,30)
+
 
 % --- Executes on button press in plot1.
 function plot1_Callback(hObject, eventdata, handles)
@@ -145,7 +140,6 @@ grid on;
 axis equal;
 xlabel('x-axis');
 ylabel('y-axis');
-
 
 global x y values
 
@@ -175,12 +169,12 @@ end
 % löscht current figure
 function clearcf()
 gcf
-cla
+clf
 
 % zeichnet Daten aus values in Current Figure
 function plotter()
 gcf;
-clearcf();
+plot3(9.9,9.9,2)
 view (45,30);
 grid on;
 axis equal;
@@ -190,7 +184,7 @@ hold on;
 global x y values
 xmax=size(values,2)
 ymax=size(values,1)
-
+ax
 % plot1
 for x=1:xmax
     for y=1:ymax
@@ -246,8 +240,7 @@ function ydisplay_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of ydisplay as text
 %        str2double(get(hObject,'String')) returns contents of ydisplay as a double
-global y
-y=get(han
+
 
 % --- Executes during object creation, after setting all properties.
 function ydisplay_CreateFcn(hObject, eventdata, handles)
@@ -272,7 +265,7 @@ function xdisplay_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of xdisplay as a double
 Global x
 set(handles.xdisplay,'String',x)
-
+set(handles.xdisplay,'String',x)
 
 % --- Executes during object creation, after setting all properties.
 function xdisplay_CreateFcn(hObject, eventdata, handles)
@@ -333,7 +326,6 @@ output=str2num(answer{1});
 sprintf('%d',output)
 
 %msgbox(['answer is ',num2str(output)])
-%set(handles.xdisplay,'String',6);
 set(handles.xdisplay,'String',num2str(output));
 global x y
 x=output;
@@ -415,36 +407,3 @@ function clear1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 gca
 cla
-
-
-
-function edit4_Callback(hObject, eventdata, handles)
-% hObject    handle to edit4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of edit4 as text
-%        str2double(get(hObject,'String')) returns contents of edit4 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function edit4_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-% --- Executes on button press in setxy.
-function setxy_Callback(hObject, eventdata, handles)
-% hObject    handle to setxy (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-global x y
-x=num2str(get(handles.xdisplay,'String'))
-y=num2str(get(handles.ydisplay,'String'))
