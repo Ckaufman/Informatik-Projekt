@@ -129,16 +129,15 @@ function plot1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 gcf
-view (45,30);
+view (30,12);
 grid on;
-axis equal;
 xlabel('x-axis');
 ylabel('y-axis');
 
 global x y values
 
-set(handles.xdisplay,'String',x)
-set(handles.ydisplay,'String',y)
+% set(handles.xdisplay,'String',x)
+% set(handles.ydisplay,'String',y)
 %keyboard
 clearflag=0;
 xmax=size(values,2)
@@ -159,6 +158,7 @@ for x=1:xmax
         plot3(stuetz(1,:),stuetz(2,:),stuetz(3,:),'LineWidth',2)
     end
 end
+axis equal;
 
 
 
@@ -233,8 +233,8 @@ function xdisplay_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of xdisplay as text
 %        str2double(get(hObject,'String')) returns contents of xdisplay as a double
 Global x
-set(handles.xdisplay,'String',x)
-set(handles.xdisplay,'String',x)
+% set(handles.xdisplay,'String',x)
+% set(handles.xdisplay,'String',x)
 
 % --- Executes during object creation, after setting all properties.
 function xdisplay_CreateFcn(hObject, eventdata, handles)
