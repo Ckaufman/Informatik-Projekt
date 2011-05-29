@@ -52,7 +52,8 @@ if isnan(a)
     g=0:100;
 end
 if size(a,2) < 5
-    a=[ 1 2 3 4 5 ];
+%     a=[ 1 2 3 4 5 ];
+    a=[20 30 40 50 60];
 end
 
 % --- Executes just before phase21GUI is made visible.
@@ -153,6 +154,24 @@ h=0.1
 l=length(g)
 eff(a,l)
 f(10,a)
+anew = auto(a,g)'
+set(handles.a1slider,'Value',anew(1)/100);
+set(handles.a2slider,'Value',anew(2)/100);
+set(handles.a3slider,'Value',anew(3)/100);
+set(handles.a4slider,'Value',anew(4)/100);
+set(handles.a5slider,'Value',anew(5)/100);
+set(handles.a1value,'String',num2str(anew(1)));
+set(handles.a2value,'String',num2str(anew(2)));
+set(handles.a3value,'String',num2str(anew(3)));
+set(handles.a4value,'String',num2str(anew(4)));
+set(handles.a5value,'String',num2str(anew(5)));
+% plot
+gcf
+global n
+pos=0:(n-1)/(5-1):(n-1);
+w=[pos;anew];
+plot(w(1,:),w(2,:),'go-');
+set(handles.sumSquareDisp,'String',num2str(floor(SQ(g,anew))));
 %Fda1=( eff([a(1)+h a(2) a(3) a(4) a(5)],l)-eff([a(1)+h a(2) a(3) a(4) a(5)],l) ) /h
 %Fda2=( eff([a(1) a(2)+h a(3) a(4) a(5)],l)-eff([a(1) a(2)+h a(3) a(4) a(5)],l) ) /h
 %Fda3=( eff([a(1) a(2) a(3)+h a(4) a(5)],l)-eff([a(1) a(2) a(3)+h a(4) a(5)],l) ) /h
@@ -328,7 +347,6 @@ plot(pos,0,'r+');
 % length(g)
 
 % plot lineare Verbindung der Stützstellen
-
 for i=1:5
    w= [pos;a];
    plot(w(1,:),w(2,:),'r+-');
