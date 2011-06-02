@@ -22,7 +22,7 @@ function varargout = phase21GUI(varargin)
 
 % Edit the above text to modify the response to help phase21GUI
 
-% Last Modified by GUIDE v2.5 13-May-2011 00:18:52
+% Last Modified by GUIDE v2.5 02-Jun-2011 10:54:39
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -48,11 +48,11 @@ n=101;
 
 if isnan(a) 
     disp('first time only');
-    a=[ 1 2 3 4 5 ];
+    a=[ 10 20 30 40 50 ];
     g=0:100;
 end
 if size(a,2) < 5
-    a=[ 1 2 3 4 5 ];
+    a=[ 10 20 30 40 50 ];
 end
 
 % --- Executes just before phase21GUI is made visible.
@@ -143,6 +143,16 @@ g=0.6*((w+4).*(w+2).*(w+1).*(w-1).*(w-3)+87);
 plotter(handles)
 axis([0 100 -10 110]);
 
+% --- Executes on button press in stepButton.
+function stepButton_Callback(hObject, eventdata, handles)
+% hObject    handle to stepButton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global n g a
+g(1:n)=20;
+g(floor(n*.8):n)=80
+plotter(handles)
+axis([0 100 -10 110]);
 % --- Executes on button press in butAuto.
 function butAuto_Callback(hObject, eventdata, handles)
 % hObject    handle to butAuto (see GCBO)
@@ -154,7 +164,6 @@ n=101;
 dimension=size(a,2);
 J=zeros(dimension);
 fn=zeros(dimension,1);
-a
 for i=1:dimension
 	    fn(i) = dsq(g,a,i,h,n);
 end
@@ -167,7 +176,7 @@ for x=1:dimension
 	end
 end
 J
-a = a'- (J\fn)
+a = a'- (J\fn);
 a =a'
 
 % updaten des Eingabebereiches
@@ -185,9 +194,9 @@ set(handles.a5slider,'Value',a(5)/100);
 plotter(handles)
 
 
-% --- Executes on button press in butfx.
-function butfx_Callback(hObject, eventdata, handles)
-% hObject    handle to butfx (see GCBO)
+% --- Executes on button press in AutoSQRbutton.
+function AutoSQRbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to AutoSQRbutton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global a g
@@ -366,3 +375,5 @@ if ~isempty(g)
   else
     set(handles.sumSquareDisp,'String','leer');
 end
+
+
