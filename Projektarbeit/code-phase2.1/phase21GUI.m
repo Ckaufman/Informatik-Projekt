@@ -150,7 +150,7 @@ function stepButton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 global n g a
 g(1:n)=20;
-g(floor(n*.8):n)=80
+g(floor(n*.8):n)=80;
 plotter(handles)
 axis([0 100 -10 110]);
 % --- Executes on button press in butAuto.
@@ -200,8 +200,42 @@ function AutoSQRbutton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global a g
-a
-eff(a,10)
+
+h=0.1;
+n=101;
+dimension=size(a,2);
+J=zeros(dimension);
+fn=zeros(dimension,1);
+for i=1:dimension
+	    fn(i) = dsqr(g,a,i,h,n);
+end
+		
+for x=1:dimension
+	for y= 1:dimension
+		ah=a;
+		ah(y)=a(y)+h;
+		J(x,y)= (  dsqr(g,ah,x,h,n) - dsqr(g,a,x,h,n)  ) / h ;
+	end
+end
+J
+a = a'- (J\fn);
+a =a'
+
+% updaten des Eingabebereiches
+set(handles.a1value,'String',num2str(a(1)));
+set(handles.a2value,'String',num2str(a(2)));
+set(handles.a3value,'String',num2str(a(3)));
+set(handles.a4value,'String',num2str(a(4)));
+set(handles.a5value,'String',num2str(a(5)));
+set(handles.a1slider,'Value',a(1)/100);
+set(handles.a2slider,'Value',a(2)/100);
+set(handles.a3slider,'Value',a(3)/100);
+set(handles.a4slider,'Value',a(4)/100);
+set(handles.a5slider,'Value',a(5)/100);
+
+plotter(handles)
+
+
 
 % --- Executes on slider movement.
 function a1slider_Callback(hObject, eventdata, handles)

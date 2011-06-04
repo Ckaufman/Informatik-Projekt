@@ -1,4 +1,4 @@
-function [ sum ] = SQ( g,a,n )
+function [ sum ] = SQRT( g,a,n )
 % "Sum of Square"
 % Eingabe Vektor g (Grundfunktion als Wertetabelle)
 %         a enthält Werte bei den 5 Stützstellen
@@ -11,7 +11,7 @@ for x=1:l-1
    % disp(f(x,a))
    % disp(g(x))
    % disp('--')
-    sum=sum + ( f(x,a,n)-g(x) )^2 ;
+    sum=sum+(sqrt( f(x,a,n)-g(x))^2 );
 end
 
 
