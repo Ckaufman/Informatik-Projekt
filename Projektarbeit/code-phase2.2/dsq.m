@@ -1,5 +1,6 @@
-function [ ret ] = dsq( g,a,select,h,n )
+function [ ret ] = dsq( a,select,h,n )
 % Ableitung der Sum of Squares nach dem mit select definierten Wert aus dem a-Vektor
+% a und select können auch Matrix/XY-Vektor Kombination sein
 res=[0 0 0]';
 
 % fixe Version mit nur 3 möglichen Ableitungen
@@ -10,5 +11,6 @@ res=[0 0 0]';
 
 % Ableitung für beliebig grosse A-Vektoren
 aneu=a;
-aneu(select)=aneu(select)+h;
-ret= (  SQ(g,[ aneu ] ,n) - SQ(g,a,n)  ) / h ;
+aneu(select(1),select(2))=aneu(select(1),select(2))+h;
+[a aneu ];
+ret= (  SQ( aneu ,n) - SQ(a,n)  ) / h ;

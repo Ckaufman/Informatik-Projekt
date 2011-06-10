@@ -5,16 +5,16 @@ function [ H ] = f( x,y,a,n )
 
 % Position x,y liegt zwischen welchen Stützwerten der Matrix a?
 %% Position innerhalb a
-ax= x/n* (size(a,2)-1)+1;
-ay= y/n* (size(2,1)-1)+1;
+ax= x/(n+1)* (size(a,2)-1)+1;
+ay= y/(n+1)* (size(a,1)-1)+1;
 
 %% benachbarte a(i)'s
 % A,B,C,D sollen benachbarte a(i)'s im Uhrzeigersinn enthalten
 % Achtung: a(Zeile, Spalte)=a(y-Werte,x-Werte)
 A= a( floor(ay),floor(ax) );
-B= a( floor(ay),ciel(ax)  );
-C= a( ciel (ay),ciel(ax)  );
-D= a( ciel (ay),floor(ax) );
+B= a( floor(ay),ceil(ax)  );
+C= a( ceil (ay),ceil(ax)  );
+D= a( ceil (ay),floor(ax) );
 
 %% linear interpolierter Funktionswert
 H1= A+( (B-A)*(ax-floor(ax)) );
