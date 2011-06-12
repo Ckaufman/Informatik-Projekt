@@ -22,7 +22,7 @@ function varargout = phase21GUI(varargin)
 
 % Edit the above text to modify the response to help phase21GUI
 
-% Last Modified by GUIDE v2.5 02-Jun-2011 10:54:39
+% Last Modified by GUIDE v2.5 12-Jun-2011 20:34:56
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -194,46 +194,7 @@ set(handles.a5slider,'Value',a(5)/100);
 plotter(handles)
 
 
-% --- Executes on button press in AutoSQRbutton.
-function AutoSQRbutton_Callback(hObject, eventdata, handles)
-% hObject    handle to AutoSQRbutton (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-global a g
 
-h=0.1;
-n=101;
-dimension=size(a,2);
-J=zeros(dimension);
-fn=zeros(dimension,1);
-for i=1:dimension
-	    fn(i) = dsqr(g,a,i,h,n);
-end
-		
-for x=1:dimension
-	for y= 1:dimension
-		ah=a;
-		ah(y)=a(y)+h;
-		J(x,y)= (  dsqr(g,ah,x,h,n) - dsqr(g,a,x,h,n)  ) / h ;
-	end
-end
-J
-a = a'- (J\fn);
-a =a'
-
-% updaten des Eingabebereiches
-set(handles.a1value,'String',num2str(a(1)));
-set(handles.a2value,'String',num2str(a(2)));
-set(handles.a3value,'String',num2str(a(3)));
-set(handles.a4value,'String',num2str(a(4)));
-set(handles.a5value,'String',num2str(a(5)));
-set(handles.a1slider,'Value',a(1)/100);
-set(handles.a2slider,'Value',a(2)/100);
-set(handles.a3slider,'Value',a(3)/100);
-set(handles.a4slider,'Value',a(4)/100);
-set(handles.a5slider,'Value',a(5)/100);
-
-plotter(handles)
 
 
 
@@ -409,5 +370,3 @@ if ~isempty(g)
   else
     set(handles.sumSquareDisp,'String','leer');
 end
-
-
