@@ -1,4 +1,4 @@
-% Testprogramm, welches einen Quickcheck des Programms ermöglicht
+% Testprogramm, einfache Tests, die sicherstellen, dass Funktionen konsistent arbeiten
 % f(x,y)
 if (f(10,20,[1 2; 3 4],20)- 3.8345 < 0.0001)
     disp( ' f(x,y) ok')
