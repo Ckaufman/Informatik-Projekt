@@ -6,7 +6,7 @@ a=[1.6 1.6 1.6 1.6 1.6,1.7,2,3]';		% Stützstellen
 
 n=80;					% Zwischenschritte zw. Stützstellen
 %x=1;					% Distanz zwischen zwei Stützstellen
-h=0.1;					% Ableitungsinkrement
+h=0.5;					% Ableitungsinkrement
 dimension=size(a,1);
 J=zeros(dimension);
 fn=zeros(dimension,1);
@@ -16,14 +16,14 @@ B=J;
 clf
 
  %%% Original Funktion plotten
- max=50;
+
 plot(0:n,g(0:n,n))
 hold on
 disp ('press return to continue')
 pause
 %%%%%%%%
 
-while sqneu<sqalt
+while sqneu < 100000
 	disp('>>> next')
 	sqalt= sq(a,n);
 	
@@ -46,11 +46,11 @@ while sqneu<sqalt
 	for i=1:dimension
 	    fn(i) = dsq(a,i,h,n);
 	end
-		
+		fn
 	for x=1:dimension
 		for y= 1:dimension
 		    ah=a;
-			ah(y)=a(y)+h;
+			ah(y)=a(y) + h;
 			J(x,y)= (  dsq(ah,x,h,n) - dsq(a,x,h,n)  ) / h ;
 		end
 	end
@@ -66,8 +66,7 @@ while sqneu<sqalt
 	% J(3,1) =  (  dsq([a(1)+h a(2)   a(3)  ]',3,h,n) - sq(a,n)  ) / h ;
     % J(3,2) =  (  dsq([a(1)   a(2)+h a(3)  ]',3,h,n) - sq(a,n)  ) / h ;
     % J(3,3) =  (  dsq([a(1)   a(2)   a(3)+h]',3,h,n) - sq(a,n)  ) / h ;
-	J
-    J\fn
+	    J
 	a = a- ( J\(fn) );
 	disp('a neu:')
 	a'
@@ -80,7 +79,7 @@ while sqneu<sqalt
 	hold on
     pause
     
-	sqalt=0;
+	
 end
 
 

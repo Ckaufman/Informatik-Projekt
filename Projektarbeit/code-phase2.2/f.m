@@ -5,8 +5,8 @@ function [ H ] = f( x,y,a,n )
 
 % Position x,y liegt zwischen welchen Stützwerten der Matrix a?
 %% Position innerhalb a
-ax= x/(n+1)* (size(a,2)-1)+1;
-ay= y/(n+1)* (size(a,1)-1)+1;
+ax= x/(n)* (size(a,2)-1)+1;
+ay= y/(n)* (size(a,1)-1)+1;
 
 %% benachbarte a(i)'s
 % A,B,C,D sollen benachbarte a(i)'s im Uhrzeigersinn enthalten

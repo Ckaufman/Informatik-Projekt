@@ -41,7 +41,7 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
-global x y values
+global x y values;
 
 % End initialization code - DO NOT EDIT
 
@@ -74,7 +74,7 @@ function varargout = phase11gui_OutputFcn(hObject, eventdata, handles)
 % Get default command line output from handles structure
 varargout{1} = handles.output;
 
-
+%% Buttons für Vorgabedaten
 % --- Executes on button press in berghang.
 function berghang_Callback(hObject, eventdata, handles)
 % hObject    handle to berghang (see GCBO)
@@ -83,10 +83,9 @@ function berghang_Callback(hObject, eventdata, handles)
 global values;
 values=[];
 values=[ 0.8 0.4 1; 1.8 1 1.2; 1.4 1.6 1.8];
-plotter()
-axis([0.5 3.5 0.5 3.5 0 2])
-view(40,20)
-
+plotter();
+axis([0.5 3.5 0.5 3.5 0 2]);
+view(40,20);
 
 % --- Executes on button press in mulde.
 function mulde_Callback(hObject, eventdata, handles)
@@ -97,9 +96,9 @@ global values;
 values=[];
 values=[ 0.8 0.2 0.5; 0.9 0.4 1.0; 1.0 0.9 1.5];
 
-plotter()
-axis([0.5 3.5 0.5 3.5 0 2])
-view(30,30)
+plotter();
+axis([0.5 3.5 0.5 3.5 0 2]);
+view(30,30);
 
 % --- Executes on button press in krone.
 function krone_Callback(hObject, eventdata, handles)
@@ -110,75 +109,11 @@ global values
 values=[];
 values=[ 1 .5 1.5; .5 1.5 .5; 1.5 .5 1];
 
-plotter()
-axis([0.5 3.5 0.5 3.5 0 2])
-view(30,30)
+plotter();
+axis([0.5 3.5 0.5 3.5 0 2]);
+view(30,30);
 
-
-%%%%% Functions to plot
-
-% clears current figure
-function clearcf()
-gcf;
-cla;
-
-% plot data from values into current figure
-function plotter()
-gcf;
-clearcf();
-
-grid on;
-axis equal;
-xlabel('x-axis');
-ylabel('y-axis');
-hold on
-global x y values
-xmax=size(values,2);
-ymax=size(values,1);
-
-% plot1
-for x=1:xmax
-    for y=1:ymax
-        stuetz=[x, x; y, y; 0, values(y,x)];
-        plot3(stuetz(1,:),stuetz(2,:),stuetz(3,:),'LineWidth',2);
-    end
-end
-
-%%%%% Funtions to change titleChange
-
-% --- Executes on button press in navup.
-function navup_Callback(hObject, eventdata, handles)
-% hObject    handle to navup (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-elev = get(handles.axes1,'View');
-view(elev(1),elev(2)+3)
-
-% --- Executes on button press in navdown.
-function navdown_Callback(hObject, eventdata, handles)
-% hObject    handle to navdown (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-elev = get(handles.axes1,'View');
-view(elev(1),elev(2)-3)
-
-% --- Executes on button press in navleft.
-function navleft_Callback(hObject, eventdata, handles)
-% hObject    handle to navleft (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-elev = get(handles.axes1,'View');
-view(elev(1)+3,elev(2))
-
-% --- Executes on button press in navright.
-function navright_Callback(hObject, eventdata, handles)
-% hObject    handle to navright (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-elev = get(handles.axes1,'View');
-view(elev(1)-3,elev(2))
-
-
+% figure löschen
 % --- Executes on button press in clear1.
 function clear1_Callback(hObject, eventdata, handles)
 % hObject    handle to clear1 (see GCBO)
@@ -187,33 +122,10 @@ function clear1_Callback(hObject, eventdata, handles)
 gca;
 cla;
 
-% --- Executes on button press in fullInterpol.
-function fullInterpol_Callback(hObject, eventdata, handles)
-% hObject    handle to fullInterpol (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-global x y values
-yDim = size(values,1);
-xDim = size(values,2);
-steps=4;
-inter=zeros((yDim-1)*steps+1,(xDim-1)*steps+1);
-delta = 1/(steps);
 
-ex=0;
-yps=0;
-gcf
-for x=1:delta:xDim
-    ex=ex+1;
-    yps=0;
-    for y=1:delta:yDim
-        yps=yps+1;
-       % innere Schleife durchwandert alle geforderten Stützstellen im
-       % aktuellen Quadrat
-       inter(yps,ex)=getInterpolation([x y],values)  ;
-       plot3(x,y,inter(yps,ex),'ro');
-    end
-end
 
+%% Auswahl und Editiermöglichkeit für alle Stützstellen
+% Auswahl der Stützstelle
 % --- Executes on selection change in popupmenu1.
 function popupmenu1_Callback(hObject, eventdata, handles)
 % hObject    handle to popupmenu1 (see GCBO)
@@ -222,7 +134,7 @@ function popupmenu1_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from popupmenu1
-global values selected
+global values selected;
 switch get(handles.popupmenu1,'Value')   
     case 1
         set(handles.valueEdit,'String',num2str(values(1,1)));
@@ -266,15 +178,20 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 
-
+% Werte übernehmen und plotten
 % --- Executes on button press in okButton.
 function okButton_Callback(hObject, eventdata, handles)
 % hObject    handle to okButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global values selected
-values(selected(1),selected(2))=str2num(get(handles.valueEdit,'String'))
-plotter()
+global values selected;
+% get(handles.valueEdit,'String')
+% values
+% selected
+% values(selected(1),selected(2))
+values(selected(1),selected(2))=str2num(get(handles.valueEdit,'String'));
+
+plotter();
 
 
 function valueEdit_Callback(hObject, eventdata, handles)
@@ -297,6 +214,113 @@ function valueEdit_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+
+% mit einem gegebenen Raster alle Werte interpolieren
+% --- Executes on button press in fullInterpol.
+function fullInterpol_Callback(hObject, eventdata, handles)
+% hObject    handle to fullInterpol (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x y values;
+yDim = size(values,1);
+xDim = size(values,2);
+steps=4;
+inter=zeros((yDim-1)*steps+1,(xDim-1)*steps+1);
+delta = 1/(steps);
+
+ex=0;
+yps=0;
+gcf;
+for x=1:delta:xDim
+    ex=ex+1;
+    yps=0;
+    for y=1:delta:yDim
+        yps=yps+1;
+       % innere Schleife durchwandert alle geforderten Stützstellen im
+       % aktuellen Quadrat
+       inter(yps,ex)=getInterpolation([x y],values)  ;
+       plot3(x,y,inter(yps,ex),'ro');
+    end
+end
+
+
+
+%% Buttons zur Veränderung des Sichtwinkels
+% --- Executes on button press in navup.
+function navup_Callback(hObject, eventdata, handles)
+% hObject    handle to navup (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+elev = get(handles.axes1,'View');
+view(elev(1),elev(2)+3);
+
+% --- Executes on button press in navdown.
+function navdown_Callback(hObject, eventdata, handles)
+% hObject    handle to navdown (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+elev = get(handles.axes1,'View');
+view(elev(1),elev(2)-3);
+
+% --- Executes on button press in navleft.
+function navleft_Callback(hObject, eventdata, handles)
+% hObject    handle to navleft (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+elev = get(handles.axes1,'View');
+view(elev(1)+3,elev(2));
+
+% --- Executes on button press in navright.
+function navright_Callback(hObject, eventdata, handles)
+% hObject    handle to navright (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+elev = get(handles.axes1,'View');
+view(elev(1)-3,elev(2));
+
+
+
+%%%%% Funktionen zum Plotten der Daten
+
+% Aktuelle figure löschen
+function clearcf()
+gcf;
+cla;
+
+% Stützstellen aus Matrix values zeichnen
+function plotter()
+gcf;
+clearcf();
+
+grid on;
+axis equal;
+xlabel('x-axis');
+ylabel('y-axis');
+hold on
+global x y values
+xmax=size(values,2);
+ymax=size(values,1);
+
+% plot1
+for x=1:xmax
+    for y=1:ymax
+        stuetz=[x, x; y, y; 0, values(y,x)];
+        plot3(stuetz(1,:),stuetz(2,:),stuetz(3,:),'LineWidth',2);
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
 
 % %%%%% obsolete Functions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % %%%%%                    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

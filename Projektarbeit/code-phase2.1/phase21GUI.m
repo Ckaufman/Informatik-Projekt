@@ -115,10 +115,10 @@ function butCosinus_Callback(hObject, eventdata, handles)
 % hObject    handle to butCosinus (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global n g a
+global n g a;
 w=0:(2*pi/(n-1)):(2*pi);
 g=50+40*cos(w);
-plotter(handles)
+plotter(handles);
 axis([0 100 0 110]);
 
 % --- Executes on button press in butSin27.
@@ -126,10 +126,10 @@ function butSin27_Callback(hObject, eventdata, handles)
 % hObject    handle to butSin27 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global n g a
+global n g a;
 w=0:(2*pi/(n-1)):(2*pi);
 g=50+40*sin(w+(27/360*2*pi));
-plotter(handles)
+plotter(handles);
 axis([0 100 0 110]);
 
 % --- Executes on button press in butPolynom.
@@ -137,10 +137,10 @@ function butPolynom_Callback(hObject, eventdata, handles)
 % hObject    handle to butPolynom (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global n g a
+global n g a;
 w=-4.3:(4.3+3.3)/(n-1):3.3;
 g=0.6*((w+4).*(w+2).*(w+1).*(w-1).*(w-3)+87);
-plotter(handles)
+plotter(handles);
 axis([0 100 -10 110]);
 
 % --- Executes on button press in stepButton.
@@ -148,17 +148,17 @@ function stepButton_Callback(hObject, eventdata, handles)
 % hObject    handle to stepButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global n g a
+global n g a;
 g(1:n)=20;
 g(floor(n*.8):n)=80;
-plotter(handles)
+plotter(handles);
 axis([0 100 -10 110]);
 % --- Executes on button press in butAuto.
 function butAuto_Callback(hObject, eventdata, handles)
 % hObject    handle to butAuto (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global  a g
+global  a g;
 h=0.1;
 n=101;
 dimension=size(a,2);
@@ -191,7 +191,7 @@ set(handles.a3slider,'Value',a(3)/100);
 set(handles.a4slider,'Value',a(4)/100);
 set(handles.a5slider,'Value',a(5)/100);
 
-plotter(handles)
+plotter(handles);
 
 
 
@@ -210,9 +210,9 @@ pos=get(hObject,'Value');
 min=get(hObject,'Min');
 max=get(hObject,'Max');
 set(handles.a1value,'String',num2str(pos*100));
-global a
+global a;
 a(1)=str2num(get(handles.a1value,'String'));
-plotter(handles)
+plotter(handles);
 
 % --- Executes during object creation, after setting all properties.
 function a1slider_CreateFcn(hObject, eventdata, handles)
@@ -238,9 +238,9 @@ pos=get(hObject,'Value');
 min=get(hObject,'Min');
 max=get(hObject,'Max');
 set(handles.a2value,'String',num2str(pos*100));
-global a 
+global a ;
 a(2)=str2num(get(handles.a2value,'String'));
-plotter(handles)
+plotter(handles);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -269,7 +269,7 @@ max=get(hObject,'Max');
 set(handles.a3value,'String',num2str(pos*100));
 global a
 a(3)=str2num(get(handles.a3value,'String'));
-plotter(handles)
+plotter(handles);
 
 % --- Executes during object creation, after setting all properties.
 function a3slider_CreateFcn(hObject, eventdata, handles)
@@ -295,9 +295,9 @@ pos=get(hObject,'Value');
 min=get(hObject,'Min');
 max=get(hObject,'Max');
 set(handles.a4value,'String',num2str(pos*100));
-global a
+global a;
 a(4)=str2num(get(handles.a4value,'String'));
-plotter(handles)
+plotter(handles);
 
 % --- Executes during object creation, after setting all properties.
 function a4slider_CreateFcn(hObject, eventdata, handles)
@@ -324,9 +324,9 @@ min=get(hObject,'Min');
 max=get(hObject,'Max');
 set(handles.a5value,'String',num2str(pos*100));
 %a=[str2num(get(handles.a1value,'String')) str2num(get(handles.a2value,'String')) str2num(get(handles.a3value,'String')) str2num(get(handles.a4value,'String')) str2num(get(handles.a5value,'String')) ];
-global a
+global a;
 a(5)=str2num(get(handles.a5value,'String'));
-plotter(handles)
+plotter(handles);
 
 % --- Executes during object creation, after setting all properties.
 function a5slider_CreateFcn(hObject, eventdata, handles)
@@ -342,7 +342,7 @@ end
 %%%%%%%%%%%%%%%%%%% Functions %%%%%%%%%%%%%%%%%%%%
 function plotter(handles)
 % plot the values
-global n g a
+global n g a;
 gcf;
 cla;
 plot(0:(n-1),g);

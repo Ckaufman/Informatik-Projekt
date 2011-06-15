@@ -22,7 +22,7 @@ function varargout = guiX(varargin)
 
 % Edit the above text to modify the response to help guiX
 
-% Last Modified by GUIDE v2.5 26-Apr-2011 16:54:15
+% Last Modified by GUIDE v2.5 26-Apr-2011 17:38:02
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -75,7 +75,9 @@ function varargout = guiX_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in ball.
+
+%% Buttons für Vorgabedaten
+% Bal
 function ball_Callback(hObject, eventdata, handles)
 % hObject    handle to ball (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -85,18 +87,16 @@ values=[];
 
 for i=1:5
     values=[values; sin(0.05:((pi-.1)/9):(pi-.05))*sin(i*pi/20)];
-    %plot1(sin(0.05:((pi-.1)/9):(pi-.05))*sin(i*pi/20));
-    i;
+    %plot1(sin(0.05:((pi-.1)/9):(pi-.05))*sin(i*pi/20));    
 end
 for i=4:-1:0
     values=[values; sin(0.05:((pi-.1)/9):(pi-.05))*sin(i*pi/20)];
-    i;
 end
-values=values.*6
-plotter
-axis([0 10 0 10 0 3])
-view(40,20)
+values=values.*6;
 
+plotter;
+axis([0 10 0 10 0 3]);
+view(40,20);
 
 % --- Executes on button press in valley.
 function valley_Callback(hObject, eventdata, handles)
@@ -104,16 +104,16 @@ function valley_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global values;
-values=[]
-y=[0 3 9 14 7 5 12  5 2 0.1]*0.5
-for i=1:10
-   values= [values; y]
-end
-size(values)
+values=[];
 
-plotter()
-axis([0 10 0 10 0 8])
-view(3,30)
+y=[0 3 9 14 7 5 12  5 2 0.1]*0.5;
+for i=1:10
+   values= [values; y];
+end
+
+plotter();
+axis([0 10 0 10 0 8]);
+view(3,30);
 
 % --- Executes on button press in lineardata.
 function lineardata_Callback(hObject, eventdata, handles)
@@ -121,8 +121,8 @@ function lineardata_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global values
-values=[]
-v=1
+values=[];
+v=1;
 for i=1:10
     for j=1:10
     values(i,j)=v;
@@ -130,52 +130,94 @@ for i=1:10
     end
 end
 
-plotter
-axis([0 10 0 10 0 11])
-view(40,30)
+plotter;
+axis([0 10 0 10 0 11]);
+view(40,30);
 
-% --- Executes on button press in plot1.
-function plot1_Callback(hObject, eventdata, handles)
-% hObject    handle to plot1 (see GCBO)
+
+
+% Eingabe der x,y Position der gewünschten Stützstelle
+function ydisplay_Callback(hObject, eventdata, handles)
+% hObject    handle to ydisplay (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-gcf
-view (45,30);
-grid on;
-axis equal;
-xlabel('x-axis');
-ylabel('y-axis');
 
+% Hints: get(hObject,'String') returns contents of ydisplay as text
+%        str2double(get(hObject,'String')) returns contents of ydisplay as a double
+global y;
 
-global x y values
-
-%set(handles.xdisplay,'String',x)
-%set(handles.ydisplay,'String',y)
-%keyboard
-clearflag=0;
-xmax=size(values,2)
-ymax=size(values,1)
-
-%how handle existing figure?
-if clearflag==1
-    clf
+y=str2num(get(hObject,'String'));
+if (y-floor(y)<0.1)
+    y=y+0.5;
+    set(hObject,'String',num2str(y));
 end
-if clearflag==0
-    hold on
+if y > 9.9 
+     y=9.9;     
+    set(hObject,'String',num2str(y));
+elseif y< 0.1
+    y=0.1;     
+    set(hObject,'String',num2str(y));
 end
 
-% plot1
-for x=1:xmax
-    for y=1:ymax
-        stuetz=[x, x; y, y; 0, values(y,x)]
-        plot3(stuetz(1,:),stuetz(2,:),stuetz(3,:),'LineWidth',2)
-    end
+% --- Executes during object creation, after setting all properties.
+function ydisplay_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to ydisplay (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
 end
+
+function xdisplay_Callback(hObject, eventdata, handles)
+% hObject    handle to xdisplay (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of xdisplay as text
+%        str2double(get(hObject,'String')) returns contents of xdisplay as a double
+global x;
+x=str2num(get(hObject,'String'));
+if (x-floor(x)<0.1)
+    x=x+0.5;
+    set(hObject,'String',num2str(x));
+end
+
+if x > 9.9
+    x=9.9;
+    set(hObject,'String',num2str(x));
+elseif x < 0.1
+    x=0.1;
+    set(hObject,'String',num2str(x));
+end
+
+% --- Executes during object creation, after setting all properties.
+function xdisplay_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to xdisplay (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+% --- Executes on button press in clear1.
+function clear1_Callback(hObject, eventdata, handles)
+% hObject    handle to clear1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+clearcf();
 
 % löscht current figure
 function clearcf()
-gcf
-cla
+gcf;
+cla;
 
 % zeichnet Daten aus values in Current Figure
 function plotter()
@@ -187,11 +229,11 @@ axis equal;
 xlabel('x-axis');
 ylabel('y-axis');
 hold on;
-global x y values
-xmax=size(values,2)
-ymax=size(values,1)
+global x y values;
+xmax=size(values,2);
+ymax=size(values,1);
 
-% plot1
+%% plotten der Daten in Values als Stützstellen
 for x=1:xmax
     for y=1:ymax
         stuetz=[x, x; y, y; 0, values(y,x)];
@@ -200,13 +242,15 @@ for x=1:xmax
 end
 
 
+
+%% Buttons zur Veränderung des Sichtwinkels
 % --- Executes on button press in plusy.
 function plusy_Callback(hObject, eventdata, handles)
 % hObject    handle to plusy (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global y
-y= y+1
+global y;
+y= y+1;
 set(handles.ydisplay,'String',y)
 
 % --- Executes on button press in minusy.
@@ -223,11 +267,11 @@ function minusx_Callback(hObject, eventdata, handles)
 % hObject    handle to minusx (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-w=10
-global x
+%w=10;
+global x;
 x=x-1;
 set(handles.xdisplay,'String',x);
-x
+
 
 % --- Executes on button press in plusx.
 function plusx_Callback(hObject, eventdata, handles)
@@ -239,170 +283,49 @@ x=x+1;
 set(handles.xdisplay,'String',x);
 
 
-function ydisplay_Callback(hObject, eventdata, handles)
-% hObject    handle to ydisplay (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of ydisplay as text
-%        str2double(get(hObject,'String')) returns contents of ydisplay as a double
-global y
-
-y=str2num(get(hObject,'String'))
-
-if y > 9.9 
-     y=9.9;     
-    set(hObject,'String',num2str(y))
-elseif y< 0.1
-    y=0.1;     
-    set(hObject,'String',num2str(y))
-end
-y
-
-
-
-
-% --- Executes during object creation, after setting all properties.
-function ydisplay_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to ydisplay (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
-function xdisplay_Callback(hObject, eventdata, handles)
-% hObject    handle to xdisplay (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of xdisplay as text
-%        str2double(get(hObject,'String')) returns contents of xdisplay as a double
-global x
-x=str2num(get(hObject,'String'));
-
-if x > 9.9
-    x=9.9;
-elseif x < 0.1
-    x=0.1
-    set(hObject,'String',num2str(x))
-end
-
-% --- Executes during object creation, after setting all properties.
-function xdisplay_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to xdisplay (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
 % --- Executes on button press in navup.
 function navup_Callback(hObject, eventdata, handles)
 % hObject    handle to navup (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-elev = get(handles.axes1,'View')
-view(elev(1),elev(2)+3)
+elev = get(handles.axes1,'View');
+view(elev(1),elev(2)+3);
 
 % --- Executes on button press in navdown.
 function navdown_Callback(hObject, eventdata, handles)
 % hObject    handle to navdown (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-elev = get(handles.axes1,'View')
-view(elev(1),elev(2)-3)
+elev = get(handles.axes1,'View');
+view(elev(1),elev(2)-3);
 
 % --- Executes on button press in navleft.
 function navleft_Callback(hObject, eventdata, handles)
 % hObject    handle to navleft (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-elev = get(handles.axes1,'View')
-view(elev(1)-3,elev(2))
+elev = get(handles.axes1,'View');
+view(elev(1)-3,elev(2));
 
 % --- Executes on button press in navright.
 function navright_Callback(hObject, eventdata, handles)
 % hObject    handle to navright (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-elev = get(handles.axes1,'View')
-view(elev(1)+3,elev(2))
-
-% --- Executes on button press in buttonSetx.
-function buttonSetx_Callback(hObject, eventdata, handles)
-% ---- löschen ----
-% hObject    handle to buttonSetx (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-prompt={'Enter an integer (x):'};
-name='Input for x value';
-numlines=1;
-defaultanswer={'4.4'};
-answer=inputdlg(prompt, name,numlines,defaultanswer);
-output=str2num(answer{1});
-sprintf('%d',output)
-
-%msgbox(['answer is ',num2str(output)])
-%set(handles.xdisplay,'String',6);
-set(handles.xdisplay,'String',num2str(output));
-global x y
-x=output;
-
-
-
-% --- Executes on button press in buttonSety.
-function buttonSety_Callback(hObject, eventdata, handles)
-% ------ löschen -------
-% hObject    handle to buttonSety (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-prompt={'Enter an integer (y):'};
-name='Input for y value';
-numlines=1;
-defaultanswer={'2.6'};
-answer=inputdlg(prompt, name,numlines,defaultanswer);
-output=str2num(answer{1});
-sprintf('%d',output)
-
-%msgbox(['answer is ',num2str(output)])
-set(handles.ydisplay,'String',num2str(output));
-global x y
-y=output;
+elev = get(handles.axes1,'View');
+view(elev(1)+3,elev(2));
 
 
 
 
-
-% --- Executes during object creation, after setting all properties.
-function zoomSlider_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to zoomSlider (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: slider controls usually have a light gray background.
-if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor',[.9 .9 .9]);
-end
-gcf
-camzoom(get(handles.zoomSlider,'Value'))
-
-
+%% Lineare Interpolation zwischen 4 gegebenen Stützstellen
 % --- Executes on button press in interpolate1.
 function interpolate1_Callback(hObject, eventdata, handles)
 % hObject    handle to interpolate1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-global x y values
+global x y values;
+% Datenvorbereitung für Funktionsaufruf
 u=[x y];
 xlow= floor(u(1));
 ylow= floor(u(2));
@@ -411,61 +334,142 @@ yhigh= ceil(u(2));
 Q=[xlow ylow values(ylow,xlow); 
     xhigh ylow values(ylow, xhigh); 
     xlow yhigh values(yhigh, xlow);
-    xhigh yhigh values(yhigh, xhigh)]
-h = interpolate(Q,u)
+    xhigh yhigh values(yhigh, xhigh)];
+
+h = interpolate(Q,u);
+
 x=h(1);
 y=h(2);
 h=h(3);
-%plot1 red line
-gcf
-line([x x],[y y],[0 h],'Color','r','LineWidth',4)
-
-
-% --- Executes on button press in keyboard1.
-function keyboard1_Callback(hObject, eventdata, handles)
-% hObject    handle to keyboard1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-keyboard
-
-
-% --- Executes on button press in clear1.
-function clear1_Callback(hObject, eventdata, handles)
-% hObject    handle to clear1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-gca
-cla
+% Zeichnen der interpolierten Stützstelle in rot
+gcf;
+line([x x],[y y],[0 h],'Color','r','LineWidth',4);
 
 
 
-function edit4_Callback(hObject, eventdata, handles)
-% hObject    handle to edit4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of edit4 as text
-%        str2double(get(hObject,'String')) returns contents of edit4 as a double
 
 
-% --- Executes during object creation, after setting all properties.
-function edit4_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
 
 
-% --- Executes on button press in setxy.
-function setxy_Callback(hObject, eventdata, handles)
-% hObject    handle to setxy (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-global x y
-x=num2str(get(handles.xdisplay,'String'))
-y=num2str(get(handles.ydisplay,'String'))
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%  not used
+
+% % --- Executes on button press in buttonSetx.
+% function buttonSetx_Callback(hObject, eventdata, handles)
+% % ---- löschen ----
+% % hObject    handle to buttonSetx (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    structure with handles and user data (see GUIDATA)
+% prompt={'Enter an integer (x):'};
+% name='Input for x value';
+% numlines=1;
+% defaultanswer={'4.4'};
+% answer=inputdlg(prompt, name,numlines,defaultanswer);
+% output=str2num(answer{1});
+% %sprintf('%d',output)
+% disp('2 gar nie hier!!!!!!!!!!!!!!!!!')
+% %msgbox(['answer is ',num2str(output)])
+% %set(handles.xdisplay,'String',6);
+% set(handles.xdisplay,'String',num2str(output));
+% global x y
+% x=output;
+% 
+% 
+% 
+% % --- Executes on button press in buttonSety.
+% function buttonSety_Callback(hObject, eventdata, handles)
+% % ------ löschen -------
+% % hObject    handle to buttonSety (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    structure with handles and user data (see GUIDATA)
+% prompt={'Enter an integer (y):'};
+% name='Input for y value';
+% numlines=1;
+% defaultanswer={'2.6'};
+% answer=inputdlg(prompt, name,numlines,defaultanswer);
+% output=str2num(answer{1});
+% %sprintf('%d',output)
+% disp('1 gar nie hier!!!!!!!!!!!!!!!!!')
+% 
+% set(handles.ydisplay,'String',num2str(output));
+% global x y
+% y=output;
+% 
+
+
+% function edit4_Callback(hObject, eventdata, handles)
+% % hObject    handle to edit4 (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    structure with handles and user data (see GUIDATA)
+% 
+% % Hints: get(hObject,'String') returns contents of edit4 as text
+% %        str2double(get(hObject,'String')) returns contents of edit4 as a double
+% 
+% 
+% % --- Executes during object creation, after setting all properties.
+% function edit4_CreateFcn(hObject, eventdata, handles)
+% % hObject    handle to edit4 (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    empty - handles not created until after all CreateFcns called
+% 
+% % Hint: edit controls usually have a white background on Windows.
+% %       See ISPC and COMPUTER.
+% if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+%     set(hObject,'BackgroundColor','white');
+% end
+
+
+% % --- Executes during object creation, after setting all properties.
+% function zoomSlider_CreateFcn(hObject, eventdata, handles)
+% % hObject    handle to zoomSlider (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    empty - handles not created until after all CreateFcns called
+% 
+% % Hint: slider controls usually have a light gray background.
+% if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+%     set(hObject,'BackgroundColor',[.9 .9 .9]);
+% end
+% gcf
+% camzoom(get(handles.zoomSlider,'Value'))
+
+
+% 
+% %% !!! wird das hier aufgerufen?
+% % --- Executes on button press in plot1.
+% function plot1_Callback(hObject, eventdata, handles)
+% % hObject    handle to plot1 (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    structure with handles and user data (see GUIDATA)
+% gcf;
+% disp('plot1 callback')
+% view (45,30);
+% grid on;
+% axis equal;
+% xlabel('x-axis');
+% ylabel('y-axis');
+% global x y values
+% 
+% %set(handles.xdisplay,'String',x)
+% %set(handles.ydisplay,'String',y)
+% %keyboard
+% clearflag=0;
+% xmax=size(values,2);
+% ymax=size(values,1);
+% 
+% %how handle existing figure?
+% if clearflag==1
+%     clf;
+% end
+% if clearflag==0
+%     hold on;
+% end
+% 
+% % plot1
+% for x=1:xmax
+%     for y=1:ymax
+%         stuetz=[x, x; y, y; 0, values(y,x)];
+%         plot3(stuetz(1,:),stuetz(2,:),stuetz(3,:),'LineWidth',2);
+%     end
+% end

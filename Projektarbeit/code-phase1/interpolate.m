@@ -4,7 +4,7 @@ function  [Pxy] = interpolate(Q,u)
   % H1 verbindet A und B; H2 verbindet C und D
   x=u(1);
   y=u(2);
-  Q
+  
   A=Q(1,3);
   B=Q(2,3);
   C=Q(4,3);
@@ -18,10 +18,9 @@ function  [Pxy] = interpolate(Q,u)
   y=y-Q(1,2);
   
   % nun interpolieren
-  A
-  B
-  H1=A+ ((B-A)  * x/n)
-  H2=D+ ((C-D)  * x/n)
-  H =H1+((H2-H1)* y/n)
+  
+  H1=A+ ((B-A)  * x/n);
+  H2=D+ ((C-D)  * x/n);
+  H =H1+((H2-H1)* y/n);
   %Pxy=[x/n y/n  H]'
-  Pxy=[x+Q(1,1) y+Q(1,2)  H]'
+  Pxy=[x+Q(1,1) y+Q(1,2)  H]';
