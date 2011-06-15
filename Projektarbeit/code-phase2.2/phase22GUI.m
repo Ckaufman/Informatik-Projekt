@@ -340,7 +340,7 @@ for i=1:m*m
        J(i,j)= (dsq(aneu,[selectfn(1),selectfn(2)],h,n,func) - dsq(a,[selectfn(1),selectfn(2)],h,n,func))/h;       
     end
 end
-
+J
 % Für Optimierungsschritt Felder in richtige Form bringen
 % a  = m x 1 SpaltenVektor nicht mehr m x m Matrix => a1
 % fn = m x 1 SpaltenVektor

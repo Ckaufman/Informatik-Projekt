@@ -266,7 +266,7 @@ function navleft_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 elev = get(handles.axes1,'View');
-view(elev(1)-3,elev(2));
+view(elev(1)+3,elev(2));
 
 % --- Executes on button press in navright.
 function navright_Callback(hObject, eventdata, handles)
@@ -274,7 +274,7 @@ function navright_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 elev = get(handles.axes1,'View');
-view(elev(1)+3,elev(2));
+view(elev(1)-3,elev(2));
 
 
 
